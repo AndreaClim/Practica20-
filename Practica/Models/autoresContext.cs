@@ -8,7 +8,11 @@ namespace Practica.Models
         {
 
         }
-    }
+    
+
+        public DbSet<autores> autores { get; set; } 
     
     }
+
+}
 
