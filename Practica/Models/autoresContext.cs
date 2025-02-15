@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;  
+
 namespace Practica.Models
 {
     public class autoresContext : DbContext
