@@ -9,9 +9,9 @@ namespace Practica.Controllers
     [ApiController]
     public class librosController : ControllerBase
     {
-        private readonly librosContext _librosContexto;
+        private readonly Context _librosContexto;
 
-        public librosController(librosContext librosContexto) 
+        public librosController(Context librosContexto) 
         {
             _librosContexto = librosContexto;
         }
@@ -33,6 +33,32 @@ namespace Practica.Controllers
             }
 
             return Ok(listadoLibros);
+        }
+
+        /// <summary>
+        /// EndPoint para filtrar un libro por id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public IActionResult Get(int id) 
+        {
+            var equipo = (from l in _librosContexto.libros
+                                join a in _librosContexto.autores
+                                    on l.autorId equals a.autorId
+                          select new 
+                          {
+                              l.id,
+                              l.titulo,
+                              l.anioPublicacion,
+                              a.nombre,
+                              l.resumen
+                          }).FirstOrDefault();
+
+            if (equipo == null) return NotFound();
+
+            return Ok(equipo);
         }
 
     }
